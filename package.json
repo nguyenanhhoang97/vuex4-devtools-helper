@@ -1,6 +1,6 @@
 {
   "name": "vuex4-devtools-helper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Vuex 4 Devtools Helper",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
