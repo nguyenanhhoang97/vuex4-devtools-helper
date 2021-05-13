@@ -22,7 +22,7 @@ yarn add -D vuex4-devtools-helper
 ### NPM
 
 ```bash
-yarn add -D vuex4-devtools-helper
+npm install --save-dev vuex4-devtools-helper
 ```
 
 ## **Usage**
