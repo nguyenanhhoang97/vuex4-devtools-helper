@@ -12,7 +12,7 @@ import {
 
 let actionId = 0;
 
-export const addDevtools = (app, store) => {
+export const addDevtools = (app: any, store: any) => {
   setupDevtoolsPlugin(
     {
       id: "org.vuejs.vuex",
@@ -56,7 +56,7 @@ export const addDevtools = (app, store) => {
       api.on.getInspectorTree((payload) => {
         if (payload.app === app && payload.inspectorId === INSPECTOR_ID) {
           if (payload.filter) {
-            const nodes = [];
+            const nodes: any[] = [];
             flattenStoreForInspectorTree(
               nodes,
               store._modules.root,
@@ -97,8 +97,8 @@ export const addDevtools = (app, store) => {
         }
       });
 
-      store.subscribe((mutation, state) => {
-        const data = {};
+      store.subscribe((mutation: any, state: any) => {
+        const data: any = {};
 
         if (mutation.payload) {
           data.payload = mutation.payload;
@@ -121,8 +121,8 @@ export const addDevtools = (app, store) => {
       });
 
       store.subscribeAction({
-        before: (action, state) => {
-          const data = {};
+        before: (action: any, state: any) => {
+          const data: any = {};
           if (action.payload) {
             data.payload = action.payload;
           }
@@ -141,8 +141,8 @@ export const addDevtools = (app, store) => {
             },
           });
         },
-        after: (action, state) => {
-          const data = {};
+        after: (action: any, state: any) => {
+          const data: any = {};
           const duration = Date.now() - action._time;
           data.duration = {
             _custom: {
@@ -173,7 +173,7 @@ export const addDevtools = (app, store) => {
   );
 };
 
-export const makeLocalGetters = (store, namespace) => {
+export const makeLocalGetters = (store: any, namespace: string) => {
   if (!store._makeLocalGettersCache[namespace]) {
     const gettersProxy = {};
     const splitPos = namespace !== "root" ? namespace.length : 0;
@@ -206,17 +206,17 @@ export const makeLocalGetters = (store, namespace) => {
   return store._makeLocalGettersCache[namespace];
 };
 
-const extractNameFromPath = (path) => {
+const extractNameFromPath = (path: string) => {
   return path && path !== "root" ? path.split("/").slice(-2, -1)[0] : "Root";
 };
 
-const formatStoreForInspectorTree = (module, path) => {
+const formatStoreForInspectorTree: any = (module: any, path: string) => {
   return {
     id: path || "root",
 
     label: extractNameFromPath(path),
     tags: module.namespaced ? [TAG_NAMESPACED] : [],
-    children: Object.keys(module._children).map((moduleName) =>
+    children: Object.keys(module._children).map((moduleName: string) =>
       formatStoreForInspectorTree(
         module._children[moduleName],
         path + moduleName + "/"
@@ -225,7 +225,12 @@ const formatStoreForInspectorTree = (module, path) => {
   };
 };
 
-const flattenStoreForInspectorTree = (result, module, filter, path) => {
+const flattenStoreForInspectorTree = (
+  result: any,
+  module: any,
+  filter: any,
+  path: any
+) => {
   if (path.includes(filter)) {
     result.push({
       id: path || "root",
@@ -235,7 +240,7 @@ const flattenStoreForInspectorTree = (result, module, filter, path) => {
       tags: module.namespaced ? [TAG_NAMESPACED] : [],
     });
   }
-  Object.keys(module._children).forEach((moduleName) => {
+  Object.keys(module._children).forEach((moduleName: string) => {
     flattenStoreForInspectorTree(
       result,
       module._children[moduleName],
@@ -245,10 +250,10 @@ const flattenStoreForInspectorTree = (result, module, filter, path) => {
   });
 };
 
-const formatStoreForInspectorState = (module, getters, path) => {
+const formatStoreForInspectorState = (module: any, getters: any, path: any) => {
   getters = path === "root" ? getters : getters[path];
   const gettersKeys = Object.keys(getters);
-  const storeState = {
+  const storeState: any = {
     state: Object.keys(module.state).map((key) => ({
       key,
       editable: true,
@@ -257,7 +262,7 @@ const formatStoreForInspectorState = (module, getters, path) => {
   };
 
   if (gettersKeys.length) {
-    storeState.getters = gettersKeys.map((key) => ({
+    storeState.getters = gettersKeys.map((key: any) => ({
       key: key.endsWith("/") ? extractNameFromPath(key) : key,
       editable: false,
       value: getters[key],
@@ -267,7 +272,7 @@ const formatStoreForInspectorState = (module, getters, path) => {
   return storeState;
 };
 
-const getStoreModule = (moduleMap, path) => {
+const getStoreModule = (moduleMap: any, path: string) => {
   const names = path.split("/").filter((n) => n);
   return names.reduce(
     (module, moduleName, i) => {
