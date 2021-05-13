@@ -1,0 +1,12 @@
+{
+  "name": "vuex4-devtools-helper",
+  "version": "1.0.0",
+  "description": "Vuex 4 Devtools Helper",
+  "main": "index.js",
+  "repository": "git@github.com:nguyenanhhoang97/vuex4-devtools-helper.git",
+  "author": "Anh Hoang Nguyen <nguyenanhhoang.ict@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@vue/devtools-api": "^6.0.0-beta.10"
+  }
+}
